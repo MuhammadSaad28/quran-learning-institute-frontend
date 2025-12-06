@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Users, Mail, Phone, Calendar, BookOpen, Edit, Trash2, Eye } from 'lucide-react';
+import { Users, Calendar, Edit, Trash2, Eye } from 'lucide-react';
 import { AdminSidebar } from '../../components/admin/AdminSidebar';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
