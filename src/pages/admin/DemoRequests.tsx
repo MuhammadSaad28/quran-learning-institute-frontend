@@ -7,7 +7,7 @@ import { Modal } from '../../components/ui/Modal';
 import { TableSkeleton } from '../../components/ui/Skeleton';
 import api from '../../lib/axios';
 import toast from 'react-hot-toast';
-import type { DemoRequest, Course } from '../../types';
+import type { DemoRequest } from '../../types';
 
 export const AdminDemoRequests = () => {
   const [demos, setDemos] = useState<DemoRequest[]>([]);

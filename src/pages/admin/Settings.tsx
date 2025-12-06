@@ -3,7 +3,6 @@ import { Settings as SettingsIcon, Save, Globe, Mail, Phone, MapPin, Link as Lin
 import { AdminSidebar } from '../../components/admin/AdminSidebar';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
-import { Textarea } from '../../components/ui/Textarea';
 import api from '../../lib/axios';
 import toast from 'react-hot-toast';
 

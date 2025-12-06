@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Users, BookOpen, Calendar, Clock, TrendingUp, CheckCircle } from 'lucide-react';
+import { Users, BookOpen, Calendar, Clock, TrendingUp } from 'lucide-react';
 import { AdminSidebar } from '../../components/admin/AdminSidebar';
 import { CardSkeleton } from '../../components/ui/Skeleton';
 import api from '../../lib/axios';
