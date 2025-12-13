@@ -8,7 +8,7 @@ import { TableSkeleton } from '../../components/ui/Skeleton';
 import api from '../../lib/axios';
 import toast from 'react-hot-toast';
 import { convertToTimezone } from '../../lib/timezone';
-import type { DemoRequest, Settings } from '../../types';
+import type { DemoRequest } from '../../types';
 
 export const AdminDemoRequests = () => {
   const [demos, setDemos] = useState<DemoRequest[]>([]);
