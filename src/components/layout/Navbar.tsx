@@ -78,15 +78,35 @@ export const Navbar = () => {
                 {link.label}
               </Link>
             ))}
-            <div className="pt-4 border-t dark:border-gray-800 flex items-center gap-4">
-              <button onClick={toggle} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full">
-                {isDark ? <Sun className="w-5 h-5 text-gold-500" /> : <Moon className="w-5 h-5" />}
-              </button>
-              {!isAuthenticated && (
-                <>
+            <div className="pt-4 border-t dark:border-gray-800 space-y-3">
+              <div className="flex items-center gap-4">
+                <button onClick={toggle} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full">
+                  {isDark ? <Sun className="w-5 h-5 text-gold-500" /> : <Moon className="w-5 h-5" />}
+                </button>
+              </div>
+              {isAuthenticated ? (
+                <div className="space-y-2">
+                  <Link 
+                    to={user?.role === 'admin' ? '/admin' : '/student'} 
+                    onClick={() => setIsOpen(false)} 
+                    className="flex items-center gap-2 py-2 text-gray-600 dark:text-gray-300 hover:text-primary-500"
+                  >
+                    <User className="w-5 h-5" />
+                    <span>Dashboard ({user?.name})</span>
+                  </Link>
+                  <button 
+                    onClick={() => { handleLogout(); setIsOpen(false); }} 
+                    className="flex items-center gap-2 py-2 text-red-500 hover:text-red-600 w-full"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-4">
                   <Link to="/login" onClick={() => setIsOpen(false)}><Button variant="ghost" size="sm">Login</Button></Link>
                   <Link to="/courses" onClick={() => setIsOpen(false)}><Button size="sm">Book Demo</Button></Link>
-                </>
+                </div>
               )}
             </div>
           </div>

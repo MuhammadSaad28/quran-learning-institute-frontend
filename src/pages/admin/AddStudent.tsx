@@ -64,14 +64,14 @@ export const AdminAddStudent = () => {
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
       <AdminSidebar />
-      <main className="flex-1 p-8 bg-gray-50 dark:bg-gray-900">
+      <main className="flex-1 p-4 md:p-8 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-              <UserPlus className="w-8 h-8 text-primary-500" />
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+              <UserPlus className="w-6 md:w-8 h-6 md:h-8 text-primary-500" />
               Add New Student
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">Create a student account directly without demo request</p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2 text-sm md:text-base">Create a student account directly without demo request</p>
           </div>
 
           <form onSubmit={handleSubmit} className="card p-6 space-y-6">

@@ -84,10 +84,10 @@ export const AdminStudents = () => {
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
       <AdminSidebar />
-      <main className="flex-1 p-8 bg-gray-50 dark:bg-gray-900">
+      <main className="flex-1 p-4 md:p-8 bg-gray-50 dark:bg-gray-900">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Students</h1>
-          <p className="text-gray-600 dark:text-gray-400">Manage enrolled students</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Students</h1>
+          <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Manage enrolled students</p>
         </div>
 
         {loading ? (
@@ -98,64 +98,107 @@ export const AdminStudents = () => {
             <p className="text-gray-500">No students enrolled yet</p>
           </div>
         ) : (
-          <div className="card overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50 dark:bg-gray-700">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Student</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Course</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Schedule</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Start Date</th>
-                    <th className="px-6 py-4 text-right text-sm font-semibold text-gray-900 dark:text-white">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y dark:divide-gray-700">
-                  {students.map((student) => (
-                    <tr key={student._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                      <td className="px-6 py-4">
-                        <div>
-                          <p className="font-medium text-gray-900 dark:text-white">{student.userId?.name || 'N/A'}</p>
-                          <p className="text-sm text-gray-500">{student.userId?.email || 'N/A'}</p>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">
-                          {student.courseId?.title || 'N/A'}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="space-y-1">
-                          {student.weeklySchedule?.slice(0, 2).map((s, i) => (
-                            <p key={i} className="text-sm text-gray-600 dark:text-gray-400">{s.day} at {s.time}</p>
-                          ))}
-                          {student.weeklySchedule?.length > 2 && (
-                            <p className="text-xs text-gray-400">+{student.weeklySchedule.length - 2} more</p>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
-                        {new Date(student.startDate).toLocaleDateString()}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex justify-end gap-2">
-                          <button onClick={() => { setSelectedStudent(student); setViewModal(true); }} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
-                            <Eye className="w-4 h-4 text-gray-500" />
-                          </button>
-                          <button onClick={() => handleEdit(student)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
-                            <Edit className="w-4 h-4 text-blue-500" />
-                          </button>
-                          <button onClick={() => handleDelete(student._id)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
-                            <Trash2 className="w-4 h-4 text-red-500" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <>
+            {/* Mobile Cards View */}
+            <div className="md:hidden space-y-4">
+              {students.map((student) => (
+                <div key={student._id} className="card p-4">
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white">{student.userId?.name || 'N/A'}</p>
+                      <p className="text-sm text-gray-500">{student.userId?.email || 'N/A'}</p>
+                    </div>
+                    <div className="flex gap-1">
+                      <button onClick={() => { setSelectedStudent(student); setViewModal(true); }} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
+                        <Eye className="w-4 h-4 text-gray-500" />
+                      </button>
+                      <button onClick={() => handleEdit(student)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
+                        <Edit className="w-4 h-4 text-blue-500" />
+                      </button>
+                      <button onClick={() => handleDelete(student._id)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
+                        <Trash2 className="w-4 h-4 text-red-500" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Course:</span>
+                      <span className="px-2 py-0.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-xs">
+                        {student.courseId?.title || 'N/A'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Schedule:</span>
+                      <span className="text-gray-700 dark:text-gray-300">{student.weeklySchedule?.[0]?.day} {student.weeklySchedule?.length > 1 && `+${student.weeklySchedule.length - 1}`}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Start Date:</span>
+                      <span className="text-gray-700 dark:text-gray-300">{new Date(student.startDate).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
+            {/* Desktop Table View */}
+            <div className="hidden md:block card overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Student</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Course</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Schedule</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Start Date</th>
+                      <th className="px-6 py-4 text-right text-sm font-semibold text-gray-900 dark:text-white">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y dark:divide-gray-700">
+                    {students.map((student) => (
+                      <tr key={student._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td className="px-6 py-4">
+                          <div>
+                            <p className="font-medium text-gray-900 dark:text-white">{student.userId?.name || 'N/A'}</p>
+                            <p className="text-sm text-gray-500">{student.userId?.email || 'N/A'}</p>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 rounded-full text-sm">
+                            {student.courseId?.title || 'N/A'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="space-y-1">
+                            {student.weeklySchedule?.slice(0, 2).map((s, i) => (
+                              <p key={i} className="text-sm text-gray-600 dark:text-gray-400">{s.day} at {s.time}</p>
+                            ))}
+                            {student.weeklySchedule?.length > 2 && (
+                              <p className="text-xs text-gray-400">+{student.weeklySchedule.length - 2} more</p>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                          {new Date(student.startDate).toLocaleDateString()}
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex justify-end gap-2">
+                            <button onClick={() => { setSelectedStudent(student); setViewModal(true); }} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
+                              <Eye className="w-4 h-4 text-gray-500" />
+                            </button>
+                            <button onClick={() => handleEdit(student)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
+                              <Edit className="w-4 h-4 text-blue-500" />
+                            </button>
+                            <button onClick={() => handleDelete(student._id)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
+                              <Trash2 className="w-4 h-4 text-red-500" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
         )}
 
         {/* View Modal */}

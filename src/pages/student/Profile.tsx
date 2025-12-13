@@ -68,10 +68,10 @@ export const StudentProfile = () => {
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
       <StudentSidebar />
-      <main className="flex-1 p-8 bg-gray-50 dark:bg-gray-900">
+      <main className="flex-1 p-4 md:p-8 bg-gray-50 dark:bg-gray-900">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">My Profile</h1>
-          <p className="text-gray-600 dark:text-gray-400">Manage your account settings</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">My Profile</h1>
+          <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Manage your account settings</p>
         </div>
 
         <div className="max-w-2xl space-y-6">

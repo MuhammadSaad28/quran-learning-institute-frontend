@@ -124,13 +124,13 @@ export const AdminSchedules = () => {
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
       <AdminSidebar />
-      <main className="flex-1 p-8 bg-gray-50 dark:bg-gray-900">
-        <div className="mb-8 flex justify-between items-center">
+      <main className="flex-1 p-4 md:p-8 bg-gray-50 dark:bg-gray-900">
+        <div className="mb-8 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Class Schedules</h1>
-            <p className="text-gray-600 dark:text-gray-400">Manage student class schedules</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Class Schedules</h1>
+            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Manage student class schedules</p>
           </div>
-          <select value={filter} onChange={(e) => setFilter(e.target.value)} className="input w-40">
+          <select value={filter} onChange={(e) => setFilter(e.target.value)} className="input w-full md:w-40">
             <option value="all">All Classes</option>
             <option value="scheduled">Scheduled</option>
             <option value="completed">Completed</option>
@@ -146,57 +146,93 @@ export const AdminSchedules = () => {
             <p className="text-gray-500">No schedules found</p>
           </div>
         ) : (
-          <div className="card overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50 dark:bg-gray-700">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Student</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Course</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Date & Time</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Status</th>
-                    <th className="px-6 py-4 text-right text-sm font-semibold text-gray-900 dark:text-white">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y dark:divide-gray-700">
-                  {filteredSchedules.map((schedule) => (
-                    <tr key={schedule._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                      <td className="px-6 py-4">
-                        <div>
-                          <p className="font-medium text-gray-900 dark:text-white">{schedule.studentId?.userId?.name || 'N/A'}</p>
-                          <p className="text-sm text-gray-500">{schedule.studentId?.userId?.email || 'N/A'}</p>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-gray-600 dark:text-gray-400">{schedule.courseId?.title || 'N/A'}</td>
-                      <td className="px-6 py-4">
-                        <p className="text-gray-900 dark:text-white font-medium">{convertToTimezone(schedule.dateTimeUTC, adminTimezone)}</p>
-                        <p className="text-xs text-gray-500">Your time ({adminTimezone})</p>
-                        <p className="text-xs text-gold-600 mt-1">Student: {schedule.dateTimeUser}</p>
-                      </td>
-                      <td className="px-6 py-4">{getStatusBadge(schedule.status)}</td>
-                      <td className="px-6 py-4">
-                        <div className="flex justify-end gap-2">
-                          {schedule.status === 'scheduled' && (
-                            <>
-                              <button onClick={() => openStatusModal(schedule, 'completed')} className="p-2 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg" title="Mark Completed">
-                                <CheckCircle className="w-4 h-4 text-green-500" />
-                              </button>
-                              <button onClick={() => openStatusModal(schedule, 'absent')} className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg" title="Mark Absent">
-                                <XCircle className="w-4 h-4 text-red-500" />
-                              </button>
-                              <button onClick={() => openRescheduleModal(schedule)} className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg" title="Reschedule">
-                                <RefreshCw className="w-4 h-4 text-blue-500" />
-                              </button>
-                            </>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <>
+            {/* Mobile Cards View */}
+            <div className="md:hidden space-y-4">
+              {filteredSchedules.map((schedule) => (
+                <div key={schedule._id} className="card p-4">
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white">{schedule.studentId?.userId?.name || 'N/A'}</p>
+                      <p className="text-xs text-gray-500">{schedule.courseId?.title || 'N/A'}</p>
+                    </div>
+                    {getStatusBadge(schedule.status)}
+                  </div>
+                  <div className="space-y-2 text-sm mb-3">
+                    <div>
+                      <p className="text-gray-900 dark:text-white font-medium">{convertToTimezone(schedule.dateTimeUTC, adminTimezone)}</p>
+                      <p className="text-xs text-gold-600">Student: {schedule.dateTimeUser}</p>
+                    </div>
+                  </div>
+                  {schedule.status === 'scheduled' && (
+                    <div className="flex gap-2 pt-3 border-t dark:border-gray-700">
+                      <button onClick={() => openStatusModal(schedule, 'completed')} className="flex-1 flex items-center justify-center gap-1 p-2 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg text-sm">
+                        <CheckCircle className="w-4 h-4" /> Complete
+                      </button>
+                      <button onClick={() => openStatusModal(schedule, 'absent')} className="flex-1 flex items-center justify-center gap-1 p-2 bg-red-50 dark:bg-red-900/20 text-red-600 rounded-lg text-sm">
+                        <XCircle className="w-4 h-4" /> Absent
+                      </button>
+                      <button onClick={() => openRescheduleModal(schedule)} className="flex-1 flex items-center justify-center gap-1 p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-lg text-sm">
+                        <RefreshCw className="w-4 h-4" /> Reschedule
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
-          </div>
+            {/* Desktop Table View */}
+            <div className="hidden md:block card overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Student</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Course</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Date & Time</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Status</th>
+                      <th className="px-6 py-4 text-right text-sm font-semibold text-gray-900 dark:text-white">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y dark:divide-gray-700">
+                    {filteredSchedules.map((schedule) => (
+                      <tr key={schedule._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td className="px-6 py-4">
+                          <div>
+                            <p className="font-medium text-gray-900 dark:text-white">{schedule.studentId?.userId?.name || 'N/A'}</p>
+                            <p className="text-sm text-gray-500">{schedule.studentId?.userId?.email || 'N/A'}</p>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-gray-600 dark:text-gray-400">{schedule.courseId?.title || 'N/A'}</td>
+                        <td className="px-6 py-4">
+                          <p className="text-gray-900 dark:text-white font-medium">{convertToTimezone(schedule.dateTimeUTC, adminTimezone)}</p>
+                          <p className="text-xs text-gray-500">Your time ({adminTimezone})</p>
+                          <p className="text-xs text-gold-600 mt-1">Student: {schedule.dateTimeUser}</p>
+                        </td>
+                        <td className="px-6 py-4">{getStatusBadge(schedule.status)}</td>
+                        <td className="px-6 py-4">
+                          <div className="flex justify-end gap-2">
+                            {schedule.status === 'scheduled' && (
+                              <>
+                                <button onClick={() => openStatusModal(schedule, 'completed')} className="p-2 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg" title="Mark Completed">
+                                  <CheckCircle className="w-4 h-4 text-green-500" />
+                                </button>
+                                <button onClick={() => openStatusModal(schedule, 'absent')} className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg" title="Mark Absent">
+                                  <XCircle className="w-4 h-4 text-red-500" />
+                                </button>
+                                <button onClick={() => openRescheduleModal(schedule)} className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg" title="Reschedule">
+                                  <RefreshCw className="w-4 h-4 text-blue-500" />
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
         )}
 
         {/* Status Update Modal */}

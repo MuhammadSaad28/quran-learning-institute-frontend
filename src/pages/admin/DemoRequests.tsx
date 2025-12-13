@@ -114,18 +114,18 @@ export const AdminDemoRequests = () => {
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
       <AdminSidebar />
-      <main className="flex-1 p-8 bg-gray-50 dark:bg-gray-900">
-        <div className="flex items-center justify-between mb-8">
+      <main className="flex-1 p-4 md:p-8 bg-gray-50 dark:bg-gray-900 ml-0 lg:ml-0">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Demo Requests</h1>
-            <p className="text-gray-600 dark:text-gray-400">Manage demo class requests from potential students</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Demo Requests</h1>
+            <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Manage demo class requests from potential students</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {['all', 'pending', 'approved', 'converted'].map((f) => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                className={`px-3 md:px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                   filter === f ? 'bg-primary-500 text-white' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300'
                 }`}
               >

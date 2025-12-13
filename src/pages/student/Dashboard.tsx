@@ -79,13 +79,13 @@ export const StudentDashboard = () => {
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
       <StudentSidebar />
-      <main className="flex-1 p-8 bg-gray-50 dark:bg-gray-900">
+      <main className="flex-1 p-4 md:p-8 bg-gray-50 dark:bg-gray-900">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
             Assalamu Alaikum, {user?.name?.split(' ')[0]}! 👋
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">Welcome to your learning dashboard</p>
+          <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">Welcome to your learning dashboard</p>
         </div>
 
         {loading ? (
@@ -109,26 +109,26 @@ export const StudentDashboard = () => {
               </div>
             )}
             {nextClass && (
-              <div className="card p-6 mb-8 bg-gradient-to-r from-primary-500 to-primary-700 text-white">
-                <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="card p-4 md:p-6 mb-8 bg-gradient-to-r from-primary-500 to-primary-700 text-white">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div>
-                    <p className="text-primary-100 mb-1">Next Class</p>
-                    <h2 className="text-2xl font-bold">{studentData?.courseId?.title || 'Your Course'}</h2>
-                    <p className="text-primary-100 mt-2 flex items-center gap-2">
+                    <p className="text-primary-100 mb-1 text-sm">Next Class</p>
+                    <h2 className="text-xl md:text-2xl font-bold">{studentData?.courseId?.title || 'Your Course'}</h2>
+                    <p className="text-primary-100 mt-2 flex items-center gap-2 text-sm">
                       <Clock className="w-4 h-4" />
                       {new Date(nextClass.dateTimeUTC).toLocaleString()}
                     </p>
                   </div>
-                  <div className="flex gap-4">
+                  <div className="grid grid-cols-4 gap-2 md:gap-4">
                     {[
                       { label: 'Days', value: countdown.days },
                       { label: 'Hours', value: countdown.hours },
-                      { label: 'Minutes', value: countdown.minutes },
-                      { label: 'Seconds', value: countdown.seconds },
+                      { label: 'Min', value: countdown.minutes },
+                      { label: 'Sec', value: countdown.seconds },
                     ].map((item) => (
                       <div key={item.label} className="text-center">
-                        <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center">
-                          <span className="text-2xl font-bold">{item.value.toString().padStart(2, '0')}</span>
+                        <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 rounded-xl flex items-center justify-center">
+                          <span className="text-lg md:text-2xl font-bold">{item.value.toString().padStart(2, '0')}</span>
                         </div>
                         <p className="text-xs mt-1 text-primary-100">{item.label}</p>
                       </div>
@@ -140,9 +140,9 @@ export const StudentDashboard = () => {
                     href={nextClass.meetingLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-2 bg-white text-primary-600 px-6 py-3 rounded-full font-semibold hover:bg-primary-50 transition-colors"
+                    className="mt-4 inline-flex items-center gap-2 bg-white text-primary-600 px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold hover:bg-primary-50 transition-colors text-sm md:text-base"
                   >
-                    <Video className="w-5 h-5" /> Join Class
+                    <Video className="w-4 md:w-5 h-4 md:h-5" /> Join Class
                   </a>
                 )}
               </div>
