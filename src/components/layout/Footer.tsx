@@ -10,7 +10,7 @@ export const Footer = () => (
             <div className="w-10 h-10 bg-gold-500 rounded-full flex items-center justify-center">
               <BookOpen className="w-5 h-5 text-white" />
             </div>
-            <span className="font-arabic text-xl font-bold">Quran Institute</span>
+            <span className="font-arabic text-xl font-bold">Quran Wisdom Academy</span>
           </div>
           <p className="text-gray-300 text-sm">Illuminating hearts with divine knowledge through authentic Quranic education.</p>
           <div className="flex gap-4">
@@ -43,15 +43,15 @@ export const Footer = () => (
         <div>
           <h4 className="font-semibold text-lg mb-4 text-gold-500">Contact</h4>
           <ul className="space-y-3">
-            <li className="flex items-center gap-2 text-gray-300"><Mail className="w-4 h-4" /> info@quranlearning.com</li>
-            <li className="flex items-center gap-2 text-gray-300"><Phone className="w-4 h-4" /> +1 234 567 890</li>
+            <li className="flex items-center gap-2 text-gray-300"><Mail className="w-4 h-4" /> quranwisdomacademy5@gmail.com</li>
+            <li className="flex items-center gap-2 text-gray-300"><Phone className="w-4 h-4" /> +92 334 731 8922</li>
             <li className="flex items-center gap-2 text-gray-300"><MapPin className="w-4 h-4" /> Online Worldwide</li>
           </ul>
         </div>
       </div>
 
       <div className="mt-12 pt-8 border-t border-primary-600 dark:border-gray-800 text-center text-gray-400 text-sm">
-        <p>© {new Date().getFullYear()} Quran Learning Institute. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Quran Wisdom Academy. All rights reserved.</p>
         <p className="mt-2 font-arabic text-gold-500">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
       </div>
     </div>

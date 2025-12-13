@@ -1,54 +1,14 @@
-import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, BookOpen, Calendar, Settings, LogOut } from 'lucide-react';
-import { useAuthStore } from '../../store/authStore';
-import { useNavigate } from 'react-router-dom';
+import { LayoutDashboard, Users, BookOpen, Calendar, Settings, UserPlus, CalendarCheck } from 'lucide-react';
+import { ResponsiveSidebar } from '../ui/ResponsiveSidebar';
 
 const menuItems = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/admin/demo-requests', icon: Calendar, label: 'Demo Requests' },
   { to: '/admin/students', icon: Users, label: 'Students' },
+  { to: '/admin/add-student', icon: UserPlus, label: 'Add Student' },
+  { to: '/admin/schedules', icon: CalendarCheck, label: 'Schedules' },
   { to: '/admin/courses', icon: BookOpen, label: 'Courses' },
   { to: '/admin/settings', icon: Settings, label: 'Settings' },
 ];
 
-export const AdminSidebar = () => {
-  const location = useLocation();
-  const { logout } = useAuthStore();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-
-  return (
-    <aside className="w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700 min-h-[calc(100vh-4rem)] p-4">
-      <nav className="space-y-2">
-        {menuItems.map((item) => {
-          const isActive = location.pathname === item.to;
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                isActive
-                  ? 'bg-primary-500 text-white'
-                  : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              <item.icon className="w-5 h-5" />
-              <span className="font-medium">{item.label}</span>
-            </Link>
-          );
-        })}
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
-        >
-          <LogOut className="w-5 h-5" />
-          <span className="font-medium">Logout</span>
-        </button>
-      </nav>
-    </aside>
-  );
-};
+export const AdminSidebar = () => <ResponsiveSidebar menuItems={menuItems} title="Admin Panel" />;

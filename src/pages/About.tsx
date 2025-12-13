@@ -23,7 +23,7 @@ export const About = () => (
           <div>
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Mission</h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              At Quran Learning Institute, we believe that every Muslim deserves access to quality Quranic education regardless of their location. Our mission is to make learning the Quran accessible, engaging, and effective for students of all ages and backgrounds.
+              At Quran Wisdom Academy, we believe that every Muslim deserves access to quality Quranic education regardless of their location. Our mission is to make learning the Quran accessible, engaging, and effective for students of all ages and backgrounds.
             </p>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               We combine traditional Islamic teaching methodologies with modern technology to create an immersive learning experience that respects the sanctity of the Quran while making it accessible to the digital generation.

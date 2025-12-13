@@ -50,8 +50,7 @@ export const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Email Us</h3>
-                    <p className="text-gray-600 dark:text-gray-400">info@quranlearning.com</p>
-                    <p className="text-gray-600 dark:text-gray-400">support@quranlearning.com</p>
+                    <p className="text-gray-600 dark:text-gray-400">quranwisdomacademy5@gmail.com</p>
                   </div>
                 </div>
               </div>
@@ -62,9 +61,8 @@ export const Contact = () => {
                     <Phone className="w-6 h-6 text-gold-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Call Us</h3>
-                    <p className="text-gray-600 dark:text-gray-400">+1 234 567 890</p>
-                    <p className="text-gray-600 dark:text-gray-400">+1 234 567 891</p>
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Call / WhatsApp</h3>
+                    <p className="text-gray-600 dark:text-gray-400">+92 334 731 8922</p>
                   </div>
                 </div>
               </div>
@@ -76,8 +74,8 @@ export const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Working Hours</h3>
-                    <p className="text-gray-600 dark:text-gray-400">Mon - Fri: 9AM - 9PM</p>
-                    <p className="text-gray-600 dark:text-gray-400">Sat - Sun: 10AM - 6PM</p>
+                    <p className="text-gray-600 dark:text-gray-400">24/7 Available</p>
+                    <p className="text-gray-600 dark:text-gray-400">Classes around the clock</p>
                   </div>
                 </div>
               </div>

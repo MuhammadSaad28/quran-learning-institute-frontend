@@ -7,7 +7,8 @@ import { Modal } from '../../components/ui/Modal';
 import { TableSkeleton } from '../../components/ui/Skeleton';
 import api from '../../lib/axios';
 import toast from 'react-hot-toast';
-import type { DemoRequest } from '../../types';
+import { convertToTimezone } from '../../lib/timezone';
+import type { DemoRequest, Settings } from '../../types';
 
 export const AdminDemoRequests = () => {
   const [demos, setDemos] = useState<DemoRequest[]>([]);
@@ -19,10 +20,21 @@ export const AdminDemoRequests = () => {
   const [convertForm, setConvertForm] = useState({ schedule: [{ day: 'Monday', time: '10:00' }], notes: '' });
   const [submitting, setSubmitting] = useState(false);
   const [filter, setFilter] = useState('all');
+  const [adminTimezone, setAdminTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
 
   useEffect(() => {
     fetchDemos();
+    fetchSettings();
   }, []);
+
+  const fetchSettings = async () => {
+    try {
+      const { data } = await api.get('/settings');
+      if (data?.adminTimezone) {
+        setAdminTimezone(data.adminTimezone);
+      }
+    } catch {}
+  };
 
   const fetchDemos = async () => {
     try {
@@ -40,9 +52,11 @@ export const AdminDemoRequests = () => {
     }
     setSubmitting(true);
     try {
+      // Create date in admin's timezone context
       const adminFinalSlotUTC = new Date(`${approveForm.finalDate}T${approveForm.finalTime}:00`).toISOString();
       await api.put(`/demo-requests/${selectedDemo._id}/approve`, {
         adminFinalSlotUTC,
+        adminTimezone,
         meetingLink: approveForm.meetingLink,
       });
       toast.success('Demo approved and email sent to student!');
@@ -154,8 +168,15 @@ export const AdminDemoRequests = () => {
                       <span className="flex items-center gap-1 text-primary-600">
                         <Calendar className="w-4 h-4" /> Course: {typeof demo.courseId === 'object' ? demo.courseId.title : 'N/A'}
                       </span>
+                    </div>
+                    <div className="flex flex-wrap gap-4 text-sm mt-1">
                       <span className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
-                        <Clock className="w-4 h-4" /> Preferred: {demo.preferredSlotUser}
+                        <Clock className="w-4 h-4" /> Student's Time ({demo.timezone}): {demo.preferredSlotUser}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-4 text-sm">
+                      <span className="flex items-center gap-1 text-gold-600 font-medium">
+                        <Clock className="w-4 h-4" /> Your Time ({adminTimezone}): {convertToTimezone(demo.preferredSlotUTC, adminTimezone)}
                       </span>
                     </div>
                     {demo.status === 'approved' && demo.meetingLink && (
@@ -191,12 +212,19 @@ export const AdminDemoRequests = () => {
         {/* Approve Modal */}
         <Modal isOpen={approveModal} onClose={() => setApproveModal(false)} title="Approve Demo Request" size="md">
           <div className="space-y-4">
-            <div className="bg-primary-50 dark:bg-primary-900/20 p-4 rounded-xl">
+            <div className="bg-primary-50 dark:bg-primary-900/20 p-4 rounded-xl space-y-2">
               <p className="text-sm text-gray-600 dark:text-gray-400">Student: <span className="font-medium">{selectedDemo?.name}</span></p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Preferred: <span className="font-medium">{selectedDemo?.preferredSlotUser}</span></p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Student's Timezone: <span className="font-medium">{selectedDemo?.timezone}</span></p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Student's Preferred Time: <span className="font-medium">{selectedDemo?.preferredSlotUser}</span></p>
+              {selectedDemo?.preferredSlotUTC && (
+                <p className="text-sm text-gold-600 font-medium">Your Time ({adminTimezone}): {convertToTimezone(selectedDemo.preferredSlotUTC, adminTimezone)}</p>
+              )}
             </div>
-            <Input label="Final Date" type="date" value={approveForm.finalDate} onChange={(e) => setApproveForm({ ...approveForm, finalDate: e.target.value })} required />
-            <Input label="Final Time" type="time" value={approveForm.finalTime} onChange={(e) => setApproveForm({ ...approveForm, finalTime: e.target.value })} required />
+            <div className="bg-gold-50 dark:bg-gold-900/20 p-3 rounded-lg">
+              <p className="text-sm text-gold-700 dark:text-gold-400">⏰ Enter the final date/time in YOUR timezone ({adminTimezone}). The student will receive the time converted to their timezone.</p>
+            </div>
+            <Input label={`Final Date (in ${adminTimezone})`} type="date" value={approveForm.finalDate} onChange={(e) => setApproveForm({ ...approveForm, finalDate: e.target.value })} required />
+            <Input label={`Final Time (in ${adminTimezone})`} type="time" value={approveForm.finalTime} onChange={(e) => setApproveForm({ ...approveForm, finalTime: e.target.value })} required />
             <Input label="Meeting Link (Zoom/Meet)" value={approveForm.meetingLink} onChange={(e) => setApproveForm({ ...approveForm, meetingLink: e.target.value })} placeholder="https://zoom.us/j/..." required />
             <Button onClick={handleApprove} loading={submitting} className="w-full">Approve & Send Email</Button>
           </div>

@@ -31,7 +31,7 @@ export const Navbar = () => {
             <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
               <BookOpen className="w-5 h-5 text-white" />
             </div>
-            <span className="font-arabic text-xl font-bold text-primary-700 dark:text-primary-400">Quran Institute</span>
+            <span className="font-arabic text-xl font-bold text-primary-700 dark:text-primary-400">Quran Wisdom Academy</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">

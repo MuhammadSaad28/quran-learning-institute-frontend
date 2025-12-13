@@ -63,7 +63,8 @@ export interface ClassSchedule {
   dateTimeUTC: string;
   dateTimeUser: string;
   meetingLink?: string;
-  status: 'scheduled' | 'completed' | 'cancelled';
+  status: 'scheduled' | 'completed' | 'cancelled' | 'absent';
+  notes?: string;
   reminderSent: boolean;
   createdAt: string;
 }

@@ -13,6 +13,8 @@ import { FAQ } from './pages/FAQ';
 import { AdminDashboard } from './pages/admin/Dashboard';
 import { AdminDemoRequests } from './pages/admin/DemoRequests';
 import { AdminStudents } from './pages/admin/Students';
+import { AdminAddStudent } from './pages/admin/AddStudent';
+import { AdminSchedules } from './pages/admin/Schedules';
 import { AdminCourses } from './pages/admin/Courses';
 import { AdminSettings } from './pages/admin/Settings';
 import { StudentDashboard } from './pages/student/Dashboard';
@@ -38,6 +40,8 @@ export default function App() {
         <Route path="/admin" element={<ProtectedRoute role="admin"><Layout hideFooter><AdminDashboard /></Layout></ProtectedRoute>} />
         <Route path="/admin/demo-requests" element={<ProtectedRoute role="admin"><Layout hideFooter><AdminDemoRequests /></Layout></ProtectedRoute>} />
         <Route path="/admin/students" element={<ProtectedRoute role="admin"><Layout hideFooter><AdminStudents /></Layout></ProtectedRoute>} />
+        <Route path="/admin/add-student" element={<ProtectedRoute role="admin"><Layout hideFooter><AdminAddStudent /></Layout></ProtectedRoute>} />
+        <Route path="/admin/schedules" element={<ProtectedRoute role="admin"><Layout hideFooter><AdminSchedules /></Layout></ProtectedRoute>} />
         <Route path="/admin/courses" element={<ProtectedRoute role="admin"><Layout hideFooter><AdminCourses /></Layout></ProtectedRoute>} />
         <Route path="/admin/settings" element={<ProtectedRoute role="admin"><Layout hideFooter><AdminSettings /></Layout></ProtectedRoute>} />
 
